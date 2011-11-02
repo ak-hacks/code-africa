@@ -9,15 +9,17 @@ import com.ak.registration.dao.UserDAO;
 import com.ak.registration.form.User;
 
 /**
- * @author anuragkapur
+ * A TaskExecutor that uses a thread pool to persist model objects via a DAO
+ * implementation
  * 
+ * @author anuragkapur
  */
 public class DataPersister {
 
 	private TaskExecutor taskExecutor;
-	
-	private UserDAO userDAO;
 
+	private UserDAO userDAO;
+	
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
@@ -27,13 +29,13 @@ public class DataPersister {
 	}
 
 	public void persist(final User user) {
-		//TODO: Use Logger
+		// TODO: Use Logger
 		System.out.println(Thread.currentThread().getId());
 		System.out.println(Thread.currentThread().getName());
 		taskExecutor.execute(new Runnable() {
-            public void run() {
-            	userDAO.addUser(user);
-            }
+			public void run() {
+				userDAO.addUser(user);
+			}
 		});
 	}
 
