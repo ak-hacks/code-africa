@@ -1,0 +1,13 @@
+.DS_Store
+.metadata
+Bitmix-ContentServices-Trunk/*
+NI-COMMONS-trunk/*
+NI-Config-Model-trunk/*
+NI-Escenic-branches/*
+NI-Libraries-trunk/*
+NI-Technology-B_BaseApp_v2_15-03-2009_193900/*
+NI-Technology-SOL-trunk/*
+NI-Technology-STO-trunk/*
+Servers/*
+Test_Space/*
+jetgroovy/*
