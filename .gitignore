@@ -12,3 +12,5 @@ Servers/*
 Test_Space/*
 jetgroovy/*
 *.class
+UserRegistration/WebContent/WEB-INF/classes/*.*
+dist

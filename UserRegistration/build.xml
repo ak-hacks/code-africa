@@ -8,35 +8,13 @@
 		</classpath>
 	</taskdef>
 	
-	<property name="project.root.dir" location="${basedir}/../../../" />
 	<property name="webapp.dist.dir" location="${basedir}/dist" />
-	<property name="webapp.static.dir" location="${basedir}/static-content" />
-	<property name="src.dir" location="${basedir}/src/java" />
-    <property file="${project.root.dir}/apps/sto/build.properties" />
-	<property file="${basedir}/build.properties" />	
-	<property file="${project.root.dir}/build.properties" />
-	
-	<property name="dist.common-src.dir" location="${project.root.dir}/commons" /> 	
-	<property name="dist.escenic.dir" location="${project.root.dir}/escenic" />
-	<property name="dist.lib.dir" location="${project.root.dir}/libraries/lib" />
-		
 	<property name="dist.build.src.dir.classes" location="${webapp.dist.dir}/classes" />
 	<property name="dist.build.src.dir.jars" location="${webapp.dist.dir}/jars" />
 	<property name="dist.build.web.dir" location="${webapp.dist.dir}/web" />
-	<property name="dist.wars" location="${webapp.dist.dir}/wars" />	
-		
-	<property name="dist.escenic.engine.dir" location="${dist.escenic.dir}/engine" />
-	<property name="dist.static.dir" location="${project.root.dir}/dist/static" />
-	<property name="dist.nicommons.jar.dir" location="${dist.common-src.dir}/dist/archive/jars" />
-	<property name="dist.main.jar.dir" location="${project.root.dir}/dist/build-src/jars" />
-	<property name="app.fastconnector.src.dir" location="${dist.common-src.dir}/apps/ni/fast-connector" />
-	<property name="app.nstein.src.dir" location="${dist.common-src.dir}/apps/ni/ni-nstein-text-analysis" />
-	<property name="ad.root.dir" location="${basedir}/../" />
-	<property name="ad.src.publication.dir" location="${ad.root.dir}/admanager-publication" />
-	<property name="assembly.tool.plugins.lib" location="${dist.escenic.dir}/assemblytool/plugins" />	
-	
-	<property name="webapp.dist.dir" location="${basedir}/dist" />
-	<property name="webapp.dist.dir" location="${basedir}/WebContent/WEB-INF/lib" />
+	<property name="dist.wars" location="${webapp.dist.dir}/wars" />
+	<property name="webinf.lib" location="${basedir}/WebContent/WEB-INF/lib" />
+	<property name="src.dir" location="${basedir}/src" />
 	
 	<!--  -->
 	<target name="clean">
@@ -49,63 +27,20 @@
 	<target name="init">
 		<echo>Initializing...required directories for the build process would be created now</echo>
 		<mkdir dir="${webapp.dist.dir}" />
+		<mkdir dir="${dist.build.src.dir.classes}" />
+		<mkdir dir="${dist.build.web.dir}" />
+		<mkdir dir="${dist.wars}" />
+		<mkdir dir="${dist.build.src.dir.jars}" />
 		<echo>Initialization complete</echo>
 	</target>
 	
 	<!-- -->
 	<target name="set-classpath">
-		<path id="compile.classpath">
+		<path id="src.compile.classpath">
 			<fileset dir="${webinf.lib}">
-				<include name="**/**/*.jar" />
+				<include name="*.jar" />
 			</fileset>						
 		</path>
-		
-		<pathconvert property="common.lib.path">
-			<path path="${common.lib.files}" />
-			<mapper>
-				<chainedmapper>
-					<mapper type="flatten" />
-					<mapper type="glob" from="*" to="${dist.lib.dir}/*" />
-				</chainedmapper>
-			</mapper>
-		</pathconvert>
-		<path id="common.lib.path" path="${common.lib.path}" />
-
-		<pathconvert property="webapp.lib.path">
-			<path path="${webapp.lib.files}" />
-			<mapper>
-				<chainedmapper>
-					<mapper type="flatten" />
-					<mapper type="glob" from="*" to="${dist.lib.dir}/*" />
-				</chainedmapper>
-			</mapper>
-		</pathconvert>
-		<path id="webapp.lib.path" path="${webapp.lib.path}" />		
-
-		<path id="webinf.lib.path">
-			<fileset dir="${basedir}/web/WEB-INF/lib">
-				<include name="*.jar" />
-			</fileset>
-		</path>	
-		
-		<path id="ni.commons.path">
-			<fileset dir="${dist.nicommons.jar.dir}">
-				<include name="${commons.shared.jar}" />
-			</fileset>
-		</path>
-				
-		<path id="project.main.path" path="${dist.main.jar.dir}/${title.shared.jar}" />
-		
-		<path id="src.compile.classpath">
-			<path refid="escenic.lib.path" />
-			<path refid="compile.eceplugins.classpath" />
-			<path refid="common.lib.path" />
-			<path refid="webapp.lib.path" />
-			<path refid="ni.commons.path" />
-			<path refid="project.main.path" />
-			<path refid="webinf.lib.path" />
-		</path>
-		
 		<echo>Execution complete, target: set-classpath</echo>
 	</target>
 	
@@ -113,7 +48,7 @@
 	<target name="compile-src" depends="set-classpath">
 		<echo>Executing target: compile-src</echo>
 		
-		<javac destdir="${dist.build.src.dir.classes}" srcdir="${src.dir}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+		<javac destdir="${dist.build.src.dir.classes}" srcdir="${src.dir}">
 			<classpath refid="src.compile.classpath" />
 		</javac>
 		<copy todir="${dist.build.src.dir.classes}" overwrite="true">
@@ -126,9 +61,9 @@
 	<!-- -->
 	<target name="build-src" depends="compile-src">
 		<echo>Executing target: build-src</echo>
-		<jar destfile="${dist.build.src.dir.jars}/${webapp.src.jar}">
+		<jar destfile="${dist.build.src.dir.jars}/userreg.jar}">
 			<fileset dir="${dist.build.src.dir.classes}">
-				<include name="**/*.class" />
+				<include name="*.*" />
 			</fileset>
 		</jar>
 		<echo>Execution complete, target: build-src</echo>
@@ -138,107 +73,26 @@
 	<target name="prepare-war" depends="build-src">
 		<echo>Executing target: prepare-war</echo>
 		<copy todir="${dist.build.web.dir}">
-			<fileset dir="${basedir}/web"/>
+			<fileset dir="${basedir}/WebContent"/>
 		</copy>
-		
-		<copy todir="${dist.build.web.dir}/template/admanager" overwrite="true">
-			<fileset dir="${ad.src.publication.dir}/web/template">
-				<include name="**/*.*" />
-			</fileset>
-		</copy>		
-		
-		<copy file="${basedir}/web/_delivery/version.txt" tofile="${dist.build.web.dir}/_delivery/version.txt" overwrite="true">
-		  <filterset>
-		    <filter token="version" value="${version}"/>
-		    <filter token="buildlife" value="${buildlife}"/>
-		  </filterset>
-		</copy>
-		<pathtofileset name="web.lib.refid" pathrefid="webapp.lib.path" dir="${dist.lib.dir}" />
+	
 		<copy todir="${dist.build.web.dir}/WEB-INF/lib">
-			<fileset refid="web.lib.refid"></fileset>
+			<fileset dir="${dist.build.src.dir.jars}">
+				<include name="${userreg.jar}"/>
+			</fileset>
 		</copy>
-		<if>
-			<equals arg1="${build.mode}" arg2="dev" />
-			<then>
-				<copy todir="${dist.build.web.dir}/WEB-INF/classes">
-					<fileset dir="${dist.build.src.dir.classes}">
-						<include name="**/*.class" />
-						<include name="**/*.java" />
-					</fileset>
-				</copy>
-			</then>
-			<else>
-				<copy todir="${dist.build.web.dir}/WEB-INF/lib">
-					<fileset dir="${dist.build.src.dir.jars}">
-						<include name="${webapp.src.jar}"/>
-					</fileset>
-				</copy>
-			</else>
-		</if>
-		
 		<echo>Execution complete, target: prepare-war</echo>
 	</target>
 	
 	<!-- -->
 	<target name="package-war" depends="prepare-war">
 		<echo>Executing target: package-war</echo>
-		<jar jarfile="${dist.wars}/${publication.name}.war" >
+		<jar jarfile="${dist.wars}/UserRegistration.war" >
 			<fileset dir="${dist.build.web.dir}">
 				<include name="**/**"/>
 			</fileset>
 		</jar>
-		<jar jarfile="${dist.wars}/${publication2.name}.war" >
-			<fileset dir="${dist.build.web.dir}">
-				<include name="**/**"/>
-			</fileset>
-		</jar>
-		<jar jarfile="${dist.wars}/ROOT.war" >
-			<fileset dir="${dist.build.web.dir}">
-				<exclude name="**/**"/>
-			</fileset>
-		</jar>		
 		<echo>Execution complete, target: package-war</echo>
-	</target>
-	
-	<!-- -->
-	<target name="prepare-static-content">
-		<echo>Executing target: prepare-static-content</echo>
-		
-		<!--  START UNIFIED FILES -->
-		
-		<!-- UNIFY JAVASCRIPT FILES -->
-		<concat destfile="${dist.static.dir}/sto/js/unified-global-top.js">
-			<filelist dir="${webapp.static.dir}\sto\js" files="${js.top.concat.files}"/>
-		</concat>
-			
-		<concat destfile="${dist.static.dir}/sto/js/unified-global-bottom.js">
-			<filelist dir="${webapp.static.dir}\sto\js" files="${js.bottom.concat.files}"/>
-		</concat>
-		
-		<!-- UNIFY CSS FILES -->
-		<concat destfile="${dist.static.dir}/sto/css/unified-global.css">
-			<filelist dir="${webapp.static.dir}/sto/css" files="${css.global.concat.files}"/>
-		</concat>
-		
-		<!--  END UNIFIED FILES -->
-		
-		<copy todir="${dist.static.dir}">
-			<fileset dir="${webapp.static.dir}">
-				<include name="**/**"/>
-				<exclude name="**/.svn/**"/>
-			</fileset>
-		</copy>
-		<copy todir="${dist.static.dir}/sto/js">
-		<fileset dir="${app.fastconnector.src.dir}/static-content/js">
-			<include name="**/*.js"/>
-		</fileset>
-		</copy>
-		<copy todir="${dist.static.dir}/sto">
-				<fileset dir="${app.nstein.src.dir}/static-content/">
-					<include name="**/*.*"/>
-				</fileset>
-		</copy>
-		<echo>Execution complete, target: prepare-static-content</echo>
 	</target>
 	
 	<!-- -->
@@ -247,7 +101,6 @@
 		<antcall target="clean" />
 		<antcall target="init" />
 		<antcall target="package-war" />
-		<antcall target="prepare-static-content" />
 		<echo>Webapp build complete</echo>
 	</target>
 
