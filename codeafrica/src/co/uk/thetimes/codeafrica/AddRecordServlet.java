@@ -56,7 +56,7 @@ public class AddRecordServlet extends HttpServlet {
 			
 			String gdpGrowth = req.getParameter("gdp");
 			if(gdpGrowth != null && !gdpGrowth.equals(""))
-				country.setFacebookPenetration(Double.parseDouble(gdpGrowth));
+				country.setGdpGrowth(Double.parseDouble(gdpGrowth));
 
 			String happyPlanet = req.getParameter("happyplanet");
 			if(happyPlanet != null && !happyPlanet.equals(""))
