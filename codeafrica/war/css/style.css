@@ -221,20 +221,20 @@ td { vertical-align: top; }
 .map {
   background: transparent url('../img/world_map.png') no-repeat;
   background-position-y: 50px;
-  
+
   width: 960px;
   height: 600px;
   margin: 0px auto -1px auto;
 }
 
   /* boilerplate row / column setup */
-  
+
   .row {
     padding: 0;
     margin: 0;
     position: relative;
   }
-  
+
     .col {
       float: left;
     }
@@ -242,24 +242,24 @@ td { vertical-align: top; }
     .col.left {
       width: 330px;
     }
-  
+
     .col.right {
       width: 630px;
     }
-  
+
   /* row by row styles */
-  
+
   #twin-maps.row {
     height: 412px;
   }
-  
+
     #logo {
       width: 300px;
       height: 69px;
       background: transparent url('../img/logo.png') no-repeat;
       background-size: 100%;
     }
-    
+
     #instructions {
       padding-left: 5px;
       width: 600px;
@@ -270,38 +270,38 @@ td { vertical-align: top; }
       margin: 0;
       font-size: 18px;
     }
-    
+
     #instructions select {
       height: 20px;
       width: 250px;
     }
-    
+
   #titles.row {
   }
-  
+
     #titles.row .col {
       width: 160px;
       font-weight: bold;
       font-size: 14px;
       padding-left: 4px;
     }
-    
+
     #titles.row .col.left {
       color: #00aeef;
     }
-    
+
     #titles.row .col.right {
       color: #f26522;
     }
-    
-  
+
+
   #stats {
   }
-  
+
   #stats .col {
     border-top: 1px dotted black;
   }
-  
+
   #boring-stats .stat .country {
     width: 160px;
     height: 48px;
@@ -309,36 +309,36 @@ td { vertical-align: top; }
     border-bottom: 1px dotted black;
     padding-left: 4px;
   }
-  
+
   #boring-stats .key {
     font-size: 12px;
     line-height: 12px;
     margin-top: 3px;
     text-transform: uppercase;
   }
-  
+
   #boring-stats .value {
     font-size: 20px;
     line-height: 20px;
     margin-top: 3px;
   }
-  
+
   #boring-stats .country-a {
     border-right: 1px dotted black;
   }
-  
+
   #boring-stats .country-a .value {
     color: #00aeef;
-    
+
   }
-  
+
   #boring-stats .country-b .value {
     color: #f26522;
   }
-  
+
   #fun-stats {
   }
-    
+
     #fun-stats .key {
       font-size: 12px;
       line-height: 12px;
@@ -347,11 +347,11 @@ td { vertical-align: top; }
     }
 
     #fun-stats .value {
-      font-size: 23px;
+      font-size: 30px;
       line-height: 23px;
       margin-top: 3px;
     }
-    
+
     #fun-stats .description {
       font-size: 14px;
       line-height: 14px;

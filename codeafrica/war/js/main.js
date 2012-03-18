@@ -1,9 +1,9 @@
 codeafrica = (function () {
 
     var MAP_WIDTH = 630,
-        MAP_HEIGHT = 380,
+        MAP_HEIGHT = 350,
         X_OFFSET = 330,
-        Y_OFFSET = 70,
+        Y_OFFSET = 95,
         LONGITUDE_SHIFT = -22
         LATITUDE_SHIFT = -9,
         INSET_MAP_SCALE_FACTOR = 1.9;
@@ -147,7 +147,7 @@ codeafrica = (function () {
     };
 
     var getDataForCountry = function (country) {
-    	$.get("findsimilar", { c1 : country }, handleReceivedData, "json");
+    	$.get("sample/findsimilar.html", { c1 : country }, handleReceivedData, "json");
     };
 
     api.init = function () {
