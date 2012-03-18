@@ -1,6 +1,3 @@
-/**
- * 
- */
 package co.uk.thetimes.codeafrica.model;
 
 /**
@@ -11,18 +8,18 @@ public class Country {
 	
 	private String name;
 	private double area; // in sq kms
-	private String population; // in millions
-	private String populationDensity;
-	private String literacyRate;
-	private String urbanization;
-	private String divorceRate;
-	private String countryAge;
-	private String noOfMacdonalds;
-	private String cocaColaConsumtion;
-	private String womenInParliament;
-	private String alcoholConsumption;
-	private String aidPercentGovSpending;
-	private String averageBroadbandSpeed;
+	private double population; // in millions
+	private double populationDensity;
+	private double literacyRate;
+	private double urbanization;
+	private double divorceRate;
+	private double countryAge;
+	private double noOfMacdonalds;
+	private double cocaColaConsumtion;
+	private double womenInParliament;
+	private double alcoholConsumption;
+	private double aidPercentGovSpending;
+	private double averageBroadbandSpeed;
 	
 	public String getName() {
 		return name;
@@ -36,76 +33,76 @@ public class Country {
 	public void setArea(double area) {
 		this.area = area;
 	}
-	public String getPopulation() {
+	public double getPopulation() {
 		return population;
 	}
-	public void setPopulation(String population) {
+	public void setPopulation(double population) {
 		this.population = population;
 	}
-	public String getLiteracyRate() {
-		return literacyRate;
-	}
-	public void setLiteracyRate(String literacyRate) {
-		this.literacyRate = literacyRate;
-	}
-	public String getPopulationDensity() {
+	public double getPopulationDensity() {
 		return populationDensity;
 	}
-	public void setPopulationDensity(String populationDensity) {
+	public void setPopulationDensity(double populationDensity) {
 		this.populationDensity = populationDensity;
 	}
-	public String getUrbanization() {
+	public double getLiteracyRate() {
+		return literacyRate;
+	}
+	public void setLiteracyRate(double literacyRate) {
+		this.literacyRate = literacyRate;
+	}
+	public double getUrbanization() {
 		return urbanization;
 	}
-	public void setUrbanization(String urbanization) {
+	public void setUrbanization(double urbanization) {
 		this.urbanization = urbanization;
 	}
-	public String getDivorceRate() {
+	public double getDivorceRate() {
 		return divorceRate;
 	}
-	public void setDivorceRate(String divorceRate) {
+	public void setDivorceRate(double divorceRate) {
 		this.divorceRate = divorceRate;
 	}
-	public String getCountryAge() {
+	public double getCountryAge() {
 		return countryAge;
 	}
-	public void setCountryAge(String countryAge) {
+	public void setCountryAge(double countryAge) {
 		this.countryAge = countryAge;
 	}
-	public String getNoOfMacdonalds() {
+	public double getNoOfMacdonalds() {
 		return noOfMacdonalds;
 	}
-	public void setNoOfMacdonalds(String noOfMacdonalds) {
+	public void setNoOfMacdonalds(double noOfMacdonalds) {
 		this.noOfMacdonalds = noOfMacdonalds;
 	}
-	public String getCocaColaConsumtion() {
+	public double getCocaColaConsumtion() {
 		return cocaColaConsumtion;
 	}
-	public void setCocaColaConsumtion(String cocaColaConsumtion) {
+	public void setCocaColaConsumtion(double cocaColaConsumtion) {
 		this.cocaColaConsumtion = cocaColaConsumtion;
 	}
-	public String getWomenInParliament() {
+	public double getWomenInParliament() {
 		return womenInParliament;
 	}
-	public void setWomenInParliament(String womenInParliament) {
+	public void setWomenInParliament(double womenInParliament) {
 		this.womenInParliament = womenInParliament;
 	}
-	public String getAlcoholConsumption() {
+	public double getAlcoholConsumption() {
 		return alcoholConsumption;
 	}
-	public void setAlcoholConsumption(String alcoholConsumption) {
+	public void setAlcoholConsumption(double alcoholConsumption) {
 		this.alcoholConsumption = alcoholConsumption;
 	}
-	public String getAidPercentGovSpending() {
+	public double getAidPercentGovSpending() {
 		return aidPercentGovSpending;
 	}
-	public void setAidPercentGovSpending(String aidPercentGovSpending) {
+	public void setAidPercentGovSpending(double aidPercentGovSpending) {
 		this.aidPercentGovSpending = aidPercentGovSpending;
 	}
-	public String getAverageBroadbandSpeed() {
+	public double getAverageBroadbandSpeed() {
 		return averageBroadbandSpeed;
 	}
-	public void setAverageBroadbandSpeed(String averageBroadbandSpeed) {
+	public void setAverageBroadbandSpeed(double averageBroadbandSpeed) {
 		this.averageBroadbandSpeed = averageBroadbandSpeed;
 	}
 }

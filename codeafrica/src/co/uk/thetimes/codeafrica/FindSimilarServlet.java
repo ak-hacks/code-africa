@@ -1,11 +1,9 @@
-/**
- * 
- */
 package co.uk.thetimes.codeafrica;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +25,9 @@ import com.google.gson.Gson;
 @SuppressWarnings("serial")
 public class FindSimilarServlet extends HttpServlet {
 	
+	private String chosenParam;
+	double rangeToCheckIn;
+	
 	private static final Logger logger = Logger.getLogger(FindSimilarServlet.class
 			.getCanonicalName());
 	
@@ -41,7 +42,7 @@ public class FindSimilarServlet extends HttpServlet {
 			resp.getWriter()
 					.write("<b>Invalid arguments passed to the service.</b><br/>Please ensure you supply a country name.<br/>Example: TODO");
 		} else {
-			List<Entity> listOfCountries = new ArrayList<Entity>(2);
+			List<Entity> listOfCountries = new ArrayList<Entity>(3);
 
 			Key keyForCountry1 = KeyFactory.createKey("Country", country1);
 			Entity countryEntity1 = DSInterface.findEntity(keyForCountry1);
@@ -49,6 +50,10 @@ public class FindSimilarServlet extends HttpServlet {
 			
 			listOfCountries.add(countryEntity1);
 			listOfCountries.add(similarCountryEntity);
+			
+			Entity similarSearchCriteria = new Entity("search criteria");
+			similarSearchCriteria.setProperty("prameter", chosenParam);
+			listOfCountries.add(similarSearchCriteria);
 			
 			// Prepare and write JSON string to response stream.
 			Gson jsonConverter = new Gson();
@@ -58,23 +63,41 @@ public class FindSimilarServlet extends HttpServlet {
 	}
 	
 	private Entity findSimilarEntity(Entity inputCountry) {
-		double area = (Double)inputCountry.getProperty("area");
-		logger.log(Level.INFO, "Searching for an entity that matches area :: " + area);
+		
+		generateRandomSimilaCriteria();
+		
+		double chosenParamValue = (Double)inputCountry.getProperty(chosenParam);
+		logger.log(Level.INFO, "Searching for an entity that matches " + chosenParam + " :: " + chosenParamValue);
 		
 		Entity similarCountry = null;
-		double rangeToCheckIn = 100.00;
 		
-		while(rangeToCheckIn <= area) {		
+		while(rangeToCheckIn <= chosenParamValue) {		
 			Query query = new Query("Country");
-			query.addFilter("area", Query.FilterOperator.GREATER_THAN , area - rangeToCheckIn);
-			query.addFilter("area", Query.FilterOperator.LESS_THAN , area + rangeToCheckIn);
-			query.addFilter("area", Query.FilterOperator.NOT_EQUAL, area);
+			query.addFilter(chosenParam, Query.FilterOperator.GREATER_THAN , chosenParamValue - rangeToCheckIn);
+			query.addFilter(chosenParam, Query.FilterOperator.LESS_THAN , chosenParamValue + rangeToCheckIn);
+			query.addFilter(chosenParam, Query.FilterOperator.NOT_EQUAL, chosenParamValue);
 			similarCountry = DSInterface.findEntity(query);
 			if(similarCountry != null)
 				break;
-			rangeToCheckIn += 100;
+			rangeToCheckIn *= 2;
 		}
 
 		return similarCountry;
+	}
+	
+	private void generateRandomSimilaCriteria() {
+		
+		String[] comparisonParams = {"area","population"};
+		Random randomGenerator = new Random();
+		int random = randomGenerator.nextInt(comparisonParams.length);
+		
+		chosenParam = comparisonParams[random];
+		rangeToCheckIn = 0.00;
+		
+		if(chosenParam.equals("area")) {
+			rangeToCheckIn = 100;
+		}else if(chosenParam.equals("population")) {
+			rangeToCheckIn = 0.2;
+		}
 	}
 }

@@ -25,21 +25,58 @@ public class AddRecordServlet extends HttpServlet {
 		if (countryName != null) {
 			Country country = new Country();
 			country.setName(countryName);
+			
 			String areaString = req.getParameter("area");
 			if(areaString != null && !areaString.equals(""))
 				country.setArea(Double.parseDouble(areaString));
-			country.setPopulation(req.getParameter("pop"));
-			country.setPopulationDensity(req.getParameter("popden"));
-			country.setLiteracyRate(req.getParameter("litrate"));
-			country.setUrbanization(req.getParameter("urb"));
-			country.setDivorceRate(req.getParameter("divrate"));
-			country.setCountryAge(req.getParameter("age"));
-			country.setNoOfMacdonalds(req.getParameter("nom"));
-			country.setCocaColaConsumtion(req.getParameter("ccc"));
-			country.setWomenInParliament(req.getParameter("wip"));
-			country.setAlcoholConsumption(req.getParameter("alcc"));
-			country.setAidPercentGovSpending(req.getParameter("aid"));
-			country.setAverageBroadbandSpeed(req.getParameter("bbspeed"));
+			
+			String populationString = req.getParameter("pop");
+			if(populationString != null && !populationString.equals(""))
+				country.setPopulation(Double.parseDouble(populationString));
+			
+			String populationDensityString = req.getParameter("popden");
+			if(populationDensityString != null && !populationDensityString.equals(""))
+				country.setPopulationDensity(Double.parseDouble(populationDensityString));
+			
+			String literacyRateString = req.getParameter("litrate");
+			if(literacyRateString != null && !literacyRateString.equals(""))
+				country.setLiteracyRate(Double.parseDouble(literacyRateString));
+			
+			String urbanizationString = req.getParameter("urb");
+			if(urbanizationString != null && !urbanizationString.equals(""))
+				country.setUrbanization(Double.parseDouble(urbanizationString));
+			
+			String divorceRateString = req.getParameter("divrate");
+			if(divorceRateString != null && !divorceRateString.equals(""))
+				country.setDivorceRate(Double.parseDouble(divorceRateString));
+			
+			String countryAgeString = req.getParameter("age");
+			if(countryAgeString != null && !countryAgeString.equals(""))
+				country.setCountryAge(Double.parseDouble(countryAgeString));
+			
+			String noOfMacdonaldsString = req.getParameter("nom");
+			if(noOfMacdonaldsString != null && !noOfMacdonaldsString.equals(""))
+				country.setNoOfMacdonalds(Double.parseDouble(noOfMacdonaldsString));
+			
+			String cocaColaConsumptionString = req.getParameter("ccc");
+			if(cocaColaConsumptionString != null && !cocaColaConsumptionString.equals(""))
+				country.setCocaColaConsumtion(Double.parseDouble(cocaColaConsumptionString));
+			
+			String womenInParliamentString = req.getParameter("wip");
+			if(womenInParliamentString != null && !womenInParliamentString.equals(""))
+				country.setWomenInParliament(Double.parseDouble(womenInParliamentString));
+			
+			String alcoholConsumptionString = req.getParameter("alcc");
+			if(alcoholConsumptionString != null && !alcoholConsumptionString.equals(""))
+				country.setAlcoholConsumption(Double.parseDouble(alcoholConsumptionString));
+			
+			String aidPercentString = req.getParameter("aid");
+			if(aidPercentString != null && !aidPercentString.equals(""))
+				country.setAidPercentGovSpending(Double.parseDouble(aidPercentString));
+			
+			String averageBroadbandString = req.getParameter("bbspeed");
+			if(averageBroadbandString != null && !averageBroadbandString.equals(""))
+				country.setAverageBroadbandSpeed(Double.parseDouble(averageBroadbandString));
 
 			// Add or update country records
 			CountryDAO.addOrUpdateCountry(country);
