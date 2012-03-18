@@ -12,7 +12,34 @@ codeafrica = (function () {
         $countrySelect,
         mainMap;
 
-    api.commaFormat = function (number) {
+    var legend = {
+    	"Facebook Penetration" : {
+     title : "Facebook users as a percentage of population",
+     type : "percentage"
+     },
+     "Broadband Speed" : {
+     title : "Facebook users as a percentage of population",
+     type : "Mps"
+     },
+       "Women in Parliament" : {
+     title : "Percentage of parliament made up of women",
+     type : "percentage"
+     },
+      "Urbanization" : {
+     title : "Percentage of population in towns/cities",
+     type : "percentage"
+     },
+      "Happiness" : {
+     title : "Happiness of the population",
+     type : "index:higher means happier"
+     },
+      "Alcohol Consumption" : {
+     title : "Alcohol consumption",
+     type : "Litres per person per year"
+     }
+    }
+
+    var commaFormat = function (number) {
     	var commaFormatted = "";
     	for (var i=number.length; i>0; i--) {
     		if ((number.length - i) % 3 === 0 &&
@@ -58,7 +85,38 @@ codeafrica = (function () {
     };
 
     var handleReceivedData = function (data, xhr, err) {
-    	console.log(data[0].propertyMap);
+    	var myCountry = data[0],
+    		otherCountry = data[1];
+
+    	$("#country-a-name").text(myCountry.key.name);
+    	$("#country-b-name").text(otherCountry.key.name);
+
+    	$("#population-a").text(commaFormat(myCountry.propertyMap.Population.toString()));
+    	$("#population-b").text(commaFormat(otherCountry.propertyMap.Population.toString()));
+
+    	$("#area-a").text(commaFormat(myCountry.propertyMap.Area.toString()));
+    	$("#area-b").text(commaFormat(otherCountry.propertyMap.Area.toString()));
+
+    	// Now do the fun stats
+    	var keys = _.shuffle(_.keys(legend)).splice(0, 2);
+    	for (var i=0; i<keys.length; i++) {
+    		var key = keys[i];
+    		var $countryA = $(".fun-fact-" + (i+1) + ".country-a");
+    		var $countryB = $(".fun-fact-" + (i+1) + ".country-b");
+    		$countryA.find(".key").text(legend[key].title);
+    		$countryB.find(".key").text(legend[key].title);
+    		$countryA.find(".value").text(myCountry.propertyMap[key]);
+    		$countryB.find(".value").text(otherCountry.propertyMap[key]);
+    	}
+
+    	// Draw the country
+    	var myCoords = data[4],
+    		otherCoords = data[5];
+
+    	var points = JSON.parse(myCoords.propertyMap.boundaryCoordinates.value),
+    		center = JSON.parse(myCoords.propertyMap.centreCoordinates.value);
+
+    	api.drawCountry(points, center);
     };
 
     api.init = function () {
@@ -78,10 +136,9 @@ codeafrica = (function () {
         detailMap = Raphael($(".map").offset().left, Y_OFFSET, 320, 320);
     };
 
-    api.drawCountry = function (country) {
+    api.drawCountry = function (points, center) {
         mainMap.clear();
         detailMap.clear();
-        var points = countries[country]['points'];
 
         // Creates circle at x = 50, y = 40, with radius 10
         var xyPoints = _.map(points, function (point) {
@@ -92,8 +149,8 @@ codeafrica = (function () {
         countryPath.attr("fill", "#f26522");
 
         // Draw the country on the map of Africa
-        var xCenter = processLon(countries[country]["center"][0]);
-        var yCenter = processLat(countries[country]["center"][1]);
+        var xCenter = processLon(center[0]);
+        var yCenter = processLat(center[1]);
         var detailPoints = _.map(points, function (point) {
             var x = (processLon(point[0]) - xCenter) * INSET_MAP_SCALE_FACTOR,
                 y = (processLat(point[1]) - yCenter) * INSET_MAP_SCALE_FACTOR;
