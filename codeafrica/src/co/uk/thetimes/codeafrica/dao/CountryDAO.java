@@ -20,19 +20,20 @@ public class CountryDAO {
 			countryEntity = new Entity("Country", country.getName());
 		}
 		
-		countryEntity.setProperty("area", country.getArea());
-		countryEntity.setProperty("population", country.getPopulation());
-		countryEntity.setProperty("population_density",country.getPopulationDensity());
-		countryEntity.setProperty("literacy_rate",country.getLiteracyRate());
-		countryEntity.setProperty("urbanization",country.getUrbanization());
-		countryEntity.setProperty("divorce_rate",country.getDivorceRate());
-		countryEntity.setProperty("country_age",country.getCountryAge());
-		countryEntity.setProperty("no_of_macdonalds",country.getNoOfMacdonalds());
-		countryEntity.setProperty("coca_cola_consumption",country.getCocaColaConsumtion());
-		countryEntity.setProperty("women_in_parliament",country.getWomenInParliament());
-		countryEntity.setProperty("alcohol_consumption",country.getAlcoholConsumption());
-		countryEntity.setProperty("aid_percent_gov_spending",country.getAidPercentGovSpending());
-		countryEntity.setProperty("average_broadband_speed",country.getAverageBroadbandSpeed());
+		countryEntity.setProperty("Is African", country.isAfrican());
+		countryEntity.setProperty("Area", country.getArea());
+		countryEntity.setProperty("Cellular Subscribers", country.getCellularSubs());
+		countryEntity.setProperty("Internet Users", country.getInternetUsers());
+		countryEntity.setProperty("Population", country.getPopulation());
+		countryEntity.setProperty("Alcohol Consumption", country.getAlcoholConsumption());
+		countryEntity.setProperty("Facebook Penetration", country.getFacebookPenetration());
+		countryEntity.setProperty("GDP Growth", country.getGdpGrowth());
+		countryEntity.setProperty("Happy Planet", country.getHappyPlanet());
+		countryEntity.setProperty("Broadband Speed", country.getBroadbandSpeed());
+		countryEntity.setProperty("Coca Cola Consumption", country.getCocaColaConsumtion());
+		countryEntity.setProperty("Urban Population", country.getUrbanPopulation());
+		countryEntity.setProperty("Women in Parliament", country.getWomenInParliament());
+		countryEntity.setProperty("Corruptoin Index", country.getCorruptionIndex());
 		
 		// Save data
 		DSInterface.persistEntity(countryEntity);

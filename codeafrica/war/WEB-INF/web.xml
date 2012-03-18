@@ -37,6 +37,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/findsimilar</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>CountryMetadata</servlet-name>
+		<servlet-class>co.uk.thetimes.codeafrica.CountryMetadataServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CountryMetadata</servlet-name>
+		<url-pattern>/getcountrymetadata</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>remote-api</servlet-name>
 		<servlet-class>
 			com.google.apphosting.utils.remoteapi.RemoteApiServlet
