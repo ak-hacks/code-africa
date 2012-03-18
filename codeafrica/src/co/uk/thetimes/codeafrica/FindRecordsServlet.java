@@ -1,6 +1,3 @@
-/**
- * 
- */
 package co.uk.thetimes.codeafrica;
 
 import java.io.IOException;
@@ -32,12 +29,24 @@ public class FindRecordsServlet extends HttpServlet {
 		String country1 = req.getParameter("c1");
 		String country2 = req.getParameter("c2");
 
+		Gson jsonConverter = new Gson();
+		
 		if (country1 == null) {
-			resp.setContentType("text/html");
-			// Respond with a HTTP 400 bad request code
-			resp.setStatus(400);
-			resp.getWriter()
-					.write("<b>Invalid arguments passed to the service.</b><br/>Please ensure you supply atleast one country name as a request parameter with name 'c1'.<br/>Example: http://thetimescodejam.appspot.com/findrecords?c1=Ghana&c2=Ethiopia");
+			List<Entity> countries =  DSInterface.listEntities("Country");
+			resp.setContentType("text/plain");
+			
+			StringBuffer countriesString = new StringBuffer();
+			String countryName;
+			
+			for (Entity entity : countries) {
+				countryName = entity.getKey().getName();
+				countriesString.append(""+countryName);
+				countriesString.append("\n");
+			}
+			
+			// Respond with a HTTP 200 bad request code
+			resp.setStatus(200);
+			resp.getWriter().write(countriesString.toString());
 		} else {
 			List<Entity> listOfCountries = new ArrayList<Entity>(2);
 
@@ -53,9 +62,9 @@ public class FindRecordsServlet extends HttpServlet {
 			}
 
 			// Prepare and write JSON string to response stream.
-			Gson jsonConverter = new Gson();
 			String jsonResponseString = jsonConverter.toJson(listOfCountries);
-
+			resp.setContentType("text/html");
+			resp.setStatus(200);
 			resp.getWriter().write(jsonResponseString);
 		}
 	}
