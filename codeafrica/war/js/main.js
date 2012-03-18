@@ -125,7 +125,7 @@ codeafrica = (function () {
     };
 
     var getDataForCountry = function (country) {
-    	$.get("sample/findsimilar.html", { c1 : country }, handleReceivedData, "json");
+    	$.get("findsimilar", { c1 : country }, handleReceivedData, "json");
     };
 
     api.init = function () {
@@ -149,7 +149,7 @@ codeafrica = (function () {
             getDataForCountry(country);
         });
 
-        $.get("sample/findrecords.txt", populateCountryList, "text");
+        $.get("findrecords", populateCountryList, "text");
 
         mainMap = Raphael(X_OFFSET + $(".map").offset().left, Y_OFFSET, MAP_WIDTH, MAP_HEIGHT);
         detailMap = Raphael($(".map").offset().left, Y_OFFSET, 320, 320);
