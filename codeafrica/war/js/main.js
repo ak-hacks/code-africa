@@ -22,12 +22,6 @@ codeafrica = (function () {
         mainMap;
 
     var processLat = function (lat) {
-        // var conv = Math.PI/180;
-
-        // lat = conv * lat;
-
-  //       y = Math.log(Math.tan((Math.PI/ 4) + (lat/2))) * MAP_HEIGHT;
-        // return Math.floor(y);
         lat += LATITUDE_SHIFT;
         lat = lat * Math.PI / 180;  // convert from degrees to radians
         var y = Math.log(Math.tan((lat/2) + (Math.PI/4)));  // do the Mercator projection (w/ equator of 2pi units)
@@ -38,11 +32,9 @@ codeafrica = (function () {
     var processLon = function (lng) {
         // Make sure everything is positive
         var x = (MAP_WIDTH * (180 + lng) / 360) % MAP_WIDTH + LONGITUDE_SHIFT;
-
         if (x < 0) {
             x += MAP_WIDTH;
         }
-
         return Math.floor(x);
     }
 
@@ -57,18 +49,21 @@ codeafrica = (function () {
     };
 
     var populateCountryList = function (data) {
-    	console.log(data.split("\n"));
     	var list = "<% _.each(countries, function(name) { %> <option value='<%= name %>'><%= name %></option><% }); %>";
 		var html = _.template(list, {countries : data.split("\n")});
 		$countrySelect.html(html);
+    };
+
+    var handleReceivedData = function (data, xhr, err) {
+    	console.log(data[0].propertyMap);
     };
 
     api.init = function () {
         $countrySelect = $("#country-select");
         $countrySelect.change(function () {
             var country = $countrySelect.val();
-            $.get("sample/findrecords.txt", populateCountryList, "text");
-            api.drawCountry(country);
+            $.get("sample/findsimilar.html", { c1 : country }, handleReceivedData, "json");
+
         });
 
         $.get("sample/findrecords.txt", populateCountryList, "text");
