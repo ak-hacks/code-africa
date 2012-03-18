@@ -17,6 +17,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Text;
 import com.google.gson.Gson;
 
 /**
@@ -42,7 +43,7 @@ public class FindSimilarServlet extends HttpServlet {
 			resp.getWriter()
 					.write("<b>Invalid arguments passed to the service.</b><br/>Please ensure you supply a country name.<br/>Example: TODO");
 		} else {
-			List<Entity> listOfCountries = new ArrayList<Entity>(3);
+			List<Entity> listOfCountries = new ArrayList<Entity>();
 
 			Key keyForCountry1 = KeyFactory.createKey("Country", country1);
 			Entity countryEntity1 = DSInterface.findEntity(keyForCountry1);
@@ -54,6 +55,35 @@ public class FindSimilarServlet extends HttpServlet {
 			Entity similarSearchCriteria = new Entity("search criteria");
 			similarSearchCriteria.setProperty("prameter", chosenParam);
 			listOfCountries.add(similarSearchCriteria);
+			
+			List<String> countryCoordinates1 = getCountryCoordinates(country1);
+			List<String> countryCoordinates2 = getCountryCoordinates(similarCountryEntity.getKey().getName());
+			
+			Entity countryMetadata1 = new Entity("Cordinate Data Input Country");
+			
+			try {
+				countryMetadata1.setProperty("name", countryCoordinates1.get(0));
+				Text countryCoordTxt1 = new Text(countryCoordinates1.get(1));
+				Text countryCoordTxt2 = new Text(countryCoordinates1.get(2));
+				countryMetadata1.setProperty("centreCoordinates", countryCoordTxt1);
+				countryMetadata1.setProperty("boundaryCoordinates", countryCoordTxt2);
+				listOfCountries.add(countryMetadata1);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+
+			Entity countryMetadata2 = new Entity("Cordinate Data Similar Country");
+			
+			try {
+				countryMetadata2.setProperty("name", countryCoordinates2.get(0));
+				Text countryCoordTxt3 = new Text(countryCoordinates2.get(1));
+				Text countryCoordTxt4 = new Text(countryCoordinates2.get(2));
+				countryMetadata2.setProperty("centreCoordinates", countryCoordTxt3);
+				countryMetadata2.setProperty("boundaryCoordinates", countryCoordTxt4);
+				listOfCountries.add(countryMetadata2);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 			
 			// Prepare and write JSON string to response stream.
 			Gson jsonConverter = new Gson();
@@ -73,9 +103,12 @@ public class FindSimilarServlet extends HttpServlet {
 		
 		while(rangeToCheckIn <= chosenParamValue) {		
 			Query query = new Query("Country");
+
+			query.addFilter("Is African", Query.FilterOperator.EQUAL, 1);
 			query.addFilter(chosenParam, Query.FilterOperator.GREATER_THAN , chosenParamValue - rangeToCheckIn);
 			query.addFilter(chosenParam, Query.FilterOperator.LESS_THAN , chosenParamValue + rangeToCheckIn);
 			query.addFilter(chosenParam, Query.FilterOperator.NOT_EQUAL, chosenParamValue);
+
 			similarCountry = DSInterface.findEntity(query);
 			if(similarCountry != null)
 				break;
@@ -87,17 +120,41 @@ public class FindSimilarServlet extends HttpServlet {
 	
 	private void generateRandomSimilaCriteria() {
 		
-		String[] comparisonParams = {"area","population"};
+		String[] comparisonParams = {"Area","Population"};
 		Random randomGenerator = new Random();
 		int random = randomGenerator.nextInt(comparisonParams.length);
 		
 		chosenParam = comparisonParams[random];
 		rangeToCheckIn = 0.00;
 		
-		if(chosenParam.equals("area")) {
-			rangeToCheckIn = 100;
-		}else if(chosenParam.equals("population")) {
-			rangeToCheckIn = 0.2;
+		if(chosenParam.equals("Area")) {
+			rangeToCheckIn = 10000;
+		}else if(chosenParam.equals("Population")) {
+			rangeToCheckIn = 100000;
 		}
+	}
+	
+	private List<String> getCountryCoordinates(String countryName) {
+		
+		int i=0;
+		
+		for(i=0; i<CountryMetadataServlet.countryNames.length; i++) {
+			if(countryName.equalsIgnoreCase(CountryMetadataServlet.countryNames[i])) {
+				break;
+			}
+		}
+		
+		List<String> countryCoordinates = new ArrayList<String>(3);
+		
+		try {
+			countryCoordinates.add(countryName);
+			countryCoordinates.add(CountryMetadataServlet.centreCoordinates[i]);
+			countryCoordinates.add(CountryMetadataServlet.boundaryCoordinates[i]);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return countryCoordinates;
 	}
 }

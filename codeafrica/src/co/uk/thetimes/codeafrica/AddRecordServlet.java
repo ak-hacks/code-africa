@@ -21,63 +21,67 @@ public class AddRecordServlet extends HttpServlet {
 			throws IOException {
 
 		String countryName = req.getParameter("name");
-
+		
 		if (countryName != null) {
 			Country country = new Country();
 			country.setName(countryName);
+
+			String isAfricanString = req.getParameter("isAfrican");
+			if(isAfricanString != null && !isAfricanString.equals(""))
+				country.setAfrican(Integer.parseInt(isAfricanString));
 			
 			String areaString = req.getParameter("area");
 			if(areaString != null && !areaString.equals(""))
 				country.setArea(Double.parseDouble(areaString));
 			
-			String populationString = req.getParameter("pop");
-			if(populationString != null && !populationString.equals(""))
-				country.setPopulation(Double.parseDouble(populationString));
+			String cellularSubs = req.getParameter("cellsubs");
+			if(cellularSubs != null && !cellularSubs.equals(""))
+				country.setCellularSubs(Double.parseDouble(cellularSubs));
 			
-			String populationDensityString = req.getParameter("popden");
-			if(populationDensityString != null && !populationDensityString.equals(""))
-				country.setPopulationDensity(Double.parseDouble(populationDensityString));
-			
-			String literacyRateString = req.getParameter("litrate");
-			if(literacyRateString != null && !literacyRateString.equals(""))
-				country.setLiteracyRate(Double.parseDouble(literacyRateString));
-			
-			String urbanizationString = req.getParameter("urb");
-			if(urbanizationString != null && !urbanizationString.equals(""))
-				country.setUrbanization(Double.parseDouble(urbanizationString));
-			
-			String divorceRateString = req.getParameter("divrate");
-			if(divorceRateString != null && !divorceRateString.equals(""))
-				country.setDivorceRate(Double.parseDouble(divorceRateString));
-			
-			String countryAgeString = req.getParameter("age");
-			if(countryAgeString != null && !countryAgeString.equals(""))
-				country.setCountryAge(Double.parseDouble(countryAgeString));
-			
-			String noOfMacdonaldsString = req.getParameter("nom");
-			if(noOfMacdonaldsString != null && !noOfMacdonaldsString.equals(""))
-				country.setNoOfMacdonalds(Double.parseDouble(noOfMacdonaldsString));
-			
-			String cocaColaConsumptionString = req.getParameter("ccc");
-			if(cocaColaConsumptionString != null && !cocaColaConsumptionString.equals(""))
-				country.setCocaColaConsumtion(Double.parseDouble(cocaColaConsumptionString));
-			
-			String womenInParliamentString = req.getParameter("wip");
-			if(womenInParliamentString != null && !womenInParliamentString.equals(""))
-				country.setWomenInParliament(Double.parseDouble(womenInParliamentString));
-			
-			String alcoholConsumptionString = req.getParameter("alcc");
-			if(alcoholConsumptionString != null && !alcoholConsumptionString.equals(""))
-				country.setAlcoholConsumption(Double.parseDouble(alcoholConsumptionString));
-			
-			String aidPercentString = req.getParameter("aid");
-			if(aidPercentString != null && !aidPercentString.equals(""))
-				country.setAidPercentGovSpending(Double.parseDouble(aidPercentString));
-			
-			String averageBroadbandString = req.getParameter("bbspeed");
-			if(averageBroadbandString != null && !averageBroadbandString.equals(""))
-				country.setAverageBroadbandSpeed(Double.parseDouble(averageBroadbandString));
+			String internetUsers = req.getParameter("internet");
+			if(internetUsers != null && !internetUsers.equals(""))
+				country.setInternetUsers(Double.parseDouble(internetUsers));
 
+			String population = req.getParameter("population");
+			if(population != null && !population.equals(""))
+				country.setPopulation(Double.parseDouble(population));
+
+			String alcoholConsumption = req.getParameter("alc");
+			if(alcoholConsumption != null && !alcoholConsumption.equals(""))
+				country.setAlcoholConsumption(Double.parseDouble(alcoholConsumption));
+			
+			String facebookPenetration = req.getParameter("fb");
+			if(facebookPenetration != null && !facebookPenetration.equals(""))
+				country.setFacebookPenetration(Double.parseDouble(facebookPenetration));
+			
+			String gdpGrowth = req.getParameter("gdp");
+			if(gdpGrowth != null && !gdpGrowth.equals(""))
+				country.setFacebookPenetration(Double.parseDouble(gdpGrowth));
+
+			String happyPlanet = req.getParameter("happyplanet");
+			if(happyPlanet != null && !happyPlanet.equals(""))
+				country.setHappyPlanet(Double.parseDouble(happyPlanet));
+
+			String broadbandSpeed = req.getParameter("bbspead");
+			if(broadbandSpeed != null && !broadbandSpeed.equals(""))
+				country.setBroadbandSpeed(Double.parseDouble(broadbandSpeed));
+			
+			String cocaColaConsumtion = req.getParameter("ccc");
+			if(cocaColaConsumtion != null && !cocaColaConsumtion.equals(""))
+				country.setCocaColaConsumtion(Double.parseDouble(cocaColaConsumtion));
+			
+			String urbanPopulation = req.getParameter("urbanpop");
+			if(urbanPopulation != null && !urbanPopulation.equals(""))
+				country.setUrbanPopulation(Double.parseDouble(urbanPopulation));
+			
+			String womenInParliament = req.getParameter("wip");
+			if(womenInParliament != null && !womenInParliament.equals(""))
+				country.setWomenInParliament(Double.parseDouble(womenInParliament));
+			
+			String corruptionIndex = req.getParameter("ci");
+			if(corruptionIndex != null && !corruptionIndex.equals(""))
+				country.setCorruptionIndex(Double.parseDouble(corruptionIndex));
+			
 			// Add or update country records
 			CountryDAO.addOrUpdateCountry(country);
 			
