@@ -36,6 +36,26 @@ codeafrica = (function () {
       "Alcohol Consumption" : {
      title : "Alcohol consumption",
      type : "Litres per person per year"
+     },
+     "Coca Cola Consumption" : {
+     title : "Coca Cola Consumption",
+     type : "Litres per person per year"
+     },
+     "Cellular Subscribers" : {
+     title : "Cellular Subscribers",
+     type : "Litres per person per year"
+     },
+     "GDP Growth" : {
+     title : "GDP Growth",
+     type : "Litres per person per year"
+     },
+     "Internet Users" : {
+     title : "Internet Users",
+     type : "Litres per person per year"
+     },
+     "Corruptoin Index" : {
+     title : "Corruption Index",
+     type : "Litres per person per year"
      }
     }
 
@@ -122,6 +142,8 @@ codeafrica = (function () {
     		center = JSON.parse(myCoords.propertyMap.centreCoordinates.value);
 
     	api.drawCountry(points, center);
+
+    	$("#caption").text(myCountry.key.name + " is similar to " + otherCountry.key.name + " in terms of " + data[2].propertyMap.prameter.toLowerCase());
     };
 
     var getDataForCountry = function (country) {
@@ -134,7 +156,7 @@ codeafrica = (function () {
     		var parts = href.split("?");
     		var queryArgs = parts[parts.length-1];
     		if (queryArgs.indexOf("country") != -1) {
-    			var country = queryArgs.split("=")[1];
+    			var country = decodeURIComponent(queryArgs.split("=")[1]);
     			getDataForCountry(country);
     		}
     	}
