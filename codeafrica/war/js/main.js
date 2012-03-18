@@ -98,20 +98,25 @@ codeafrica = (function () {
     	$("#area-b").text(commaFormat(otherCountry.propertyMap.Area.toString()));
 
     	// Now do the fun stats
-    	var keys = _.shuffle(_.keys(legend)).splice(0, 2);
-    	for (var i=0; i<keys.length; i++) {
+    	var keys = _.shuffle(_.keys(legend));
+    	var shown = 0,
+    		i = 0;
+    	while (i<keys.length && shown < 2) {
     		var key = keys[i];
-    		var $countryA = $(".fun-fact-" + (i+1) + ".country-a");
-    		var $countryB = $(".fun-fact-" + (i+1) + ".country-b");
-    		$countryA.find(".key").text(legend[key].title);
-    		$countryB.find(".key").text(legend[key].title);
-    		$countryA.find(".value").text(myCountry.propertyMap[key]);
-    		$countryB.find(".value").text(otherCountry.propertyMap[key]);
+    		if (myCountry.propertyMap[key] && otherCountry.propertyMap[key]) {
+	    		var $countryA = $(".fun-fact-" + (shown+1) + ".country-a");
+	    		var $countryB = $(".fun-fact-" + (shown+1) + ".country-b");
+	    		$countryA.find(".key").text(legend[key].title);
+	    		$countryB.find(".key").text(legend[key].title);
+	    		$countryA.find(".value").text(myCountry.propertyMap[key]);
+	    		$countryB.find(".value").text(otherCountry.propertyMap[key]);
+	    		shown++;
+    		}
+    		i++;
     	}
 
     	// Draw the country
-    	var myCoords = data[4],
-    		otherCoords = data[5];
+    	var myCoords = data[3];
 
     	var points = JSON.parse(myCoords.propertyMap.boundaryCoordinates.value),
     		center = JSON.parse(myCoords.propertyMap.centreCoordinates.value);
@@ -119,18 +124,32 @@ codeafrica = (function () {
     	api.drawCountry(points, center);
     };
 
+    var getDataForCountry = function (country) {
+    	$.get("sample/findsimilar.html", { c1 : country }, handleReceivedData, "json");
+    };
+
     api.init = function () {
+    	var href = window.location.href;
+    	if (href.indexOf("?") != -1) {
+    		var parts = href.split("?");
+    		var queryArgs = parts[parts.length-1];
+    		if (queryArgs.indexOf("country") != -1) {
+    			var country = queryArgs.split("=")[1];
+    			getDataForCountry(country);
+    		}
+    	}
+
+
         $countrySelect = $("#country-select");
         $countrySelect.change(function () {
             var country = $countrySelect.val();
             if (!country) {
             	return;
             }
-            $.get("../findsimilar", { c1 : country }, handleReceivedData, "json");
-
+            getDataForCountry(country);
         });
 
-        $.get("../findrecords", populateCountryList, "text");
+        $.get("sample/findrecords.txt", populateCountryList, "text");
 
         mainMap = Raphael(X_OFFSET + $(".map").offset().left, Y_OFFSET, MAP_WIDTH, MAP_HEIGHT);
         detailMap = Raphael($(".map").offset().left, Y_OFFSET, 320, 320);
@@ -157,8 +176,6 @@ codeafrica = (function () {
 
             return [Math.floor(x) + 150, Math.floor(y) + 120];
         });
-
-        console.log(detailPoints);
 
         var detailPath = detailMap.path(pointsToPath(detailPoints));
         detailPath.attr("fill", "#00aeef");

@@ -38,142 +38,15 @@
     <header>
 
     </header>
-    <div role="main" class="map">
-
-      <!-- two maps, side by side -->
-      <div id="twin-maps" class="row clearfix">
-
-        <div class="col left">
-          <div id="logo"></div>
-        </div>
-
-        <div id="instructions" class="col right">
-          <p>
-            Africa in Numbers
-          </p>
-          <form>
+    <div style="margin : 200px auto 0px 380px">
+        <div id="logo"></div>
+        <form>
               <select name="country-select" id="country-select">
                   <option value="">Select a country...</vaue>
               </select>
           </form>
-        </div>
 
       </div>
-
-      <!-- first column titles -->
-      <div id="titles" class="row clearfix">
-
-        <div class="col left" id="country-a-name">
-            &nbsp;
-        </div>
-        <div class="col right" id="country-b-name">
-          &nbsp;
-        </div>
-      </div>
-
-      <!-- statistics -->
-      <div id="stats" class="row clearfix">
-
-        <div id="boring-stats" class="col left">
-
-          <div class="stat">
-            <div class="country country-a">
-              <div class="key">
-                Population
-              </div>
-              <div class="value" id="population-a">
-                &nbsp;
-              </div>
-            </div>
-            <div class="country country-b">
-              <div class="key">
-                Population
-              </div>
-              <div class="value" id="population-b">
-                &nbsp;
-              </div>
-            </div>
-
-          </div>
-
-          <div class="stat">
-            <div class="country country-a">
-              <div class="key">
-                Area (square kms)
-              </div>
-              <div class="value" id="area-a">
-                &nbsp;
-              </div>
-            </div>
-            <div class="country country-b">
-              <div class="key">
-                Area (square kms)
-              </div>
-              <div class="value" id="area-b">
-                &nbsp;
-              </div>
-            </div>
-
-          </div>
-
-          <div class="stat">
-            <div class="country-a"></div>
-            <div class="country-b"></div>
-          </div>
-
-          <div class="stat">
-            <div class="country-a"></div>
-            <div class="country-b"></div>
-          </div>
-
-        </div>
-
-        <div id="fun-stats" class="col right">
-
-          <div class="stat clearfix">
-            <div class="country country-a fun-fact-1">
-              <div class="key">
-                &nbsp;
-              </div>
-              <div class="value">
-                &nbsp;
-              </div>
-            </div>
-            <div class="country country-b fun-fact-1">
-              <div class="key">
-                &nbsp;
-              </div>
-              <div class="value">
-                &nbsp;
-              </div>
-            </div>
-          </div>
-
-          <div class="stat clearfix">
-            <div class="country country-a fun-fact-2">
-              <div class="key">
-                &nbsp;
-              </div>
-              <div class="value">
-                &nbsp;
-              </div>
-            </div>
-            <div class="country country-b fun-fact-2">
-              <div class="key">
-                &nbsp;
-              </div>
-              <div class="value">
-                &nbsp;
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
     <footer>
 
     </footer>
@@ -185,9 +58,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
-    <!-- scripts concatenated and minified via build script -->
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     <!-- end scripts -->
 
     <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
@@ -197,6 +68,33 @@
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
         g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
         s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+
+    <script>
+
+    var populateCountryList = function (data) {
+      var list = "<% _.each(countries, function(name) { %> <option value='<%= name %>'><%= name %></option><% }); %>";
+    var html = _.template(list, {countries : data.split("\n")});
+    $countrySelect.append(html);
+    };
+
+    var init = function () {
+        $countrySelect = $("#country-select");
+        $countrySelect.change(function () {
+            var country = $countrySelect.val();
+            if (!country) {
+              return;
+            }
+            var urlParts = window.location.href.split("/");
+            window.location.href = urlParts.splice(0, urlParts.length - 1).join("/") + "/display.html?country=" + country;
+
+        });
+
+        $.get("sample/findrecords.txt", populateCountryList, "text");
+    };
+
+
+        $(document).ready(init);
     </script>
 </body>
 </html>
