@@ -219,7 +219,7 @@ td { vertical-align: top; }
    ========================================================================== */
 
 .map {
-  background: url('../img/world_map.png');
+  background: transparent url('../img/world_map.png') no-repeat;
   background-position-y: 50px;
   
   width: 960px;
@@ -253,9 +253,11 @@ td { vertical-align: top; }
     height: 412px;
   }
   
-    #headline {
-      font-family: arial;
-      font-size: 40px;
+    #logo {
+      width: 300px;
+      height: 69px;
+      background: transparent url('../img/logo.png') no-repeat;
+      background-size: 100%;
     }
     
     #instructions {
@@ -312,6 +314,7 @@ td { vertical-align: top; }
     font-size: 12px;
     line-height: 12px;
     margin-top: 3px;
+    text-transform: uppercase;
   }
   
   #boring-stats .value {
@@ -331,10 +334,55 @@ td { vertical-align: top; }
   
   #boring-stats .country-b .value {
     color: #f26522;
-    
   }
+  
+  #fun-stats {
+  }
+    
+    #fun-stats .key {
+      font-size: 12px;
+      line-height: 12px;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
 
+    #fun-stats .value {
+      font-size: 23px;
+      line-height: 23px;
+      margin-top: 3px;
+    }
+    
+    #fun-stats .description {
+      font-size: 14px;
+      line-height: 14px;
+      margin-top: 18px;
+    }
 
+    #fun-stats .stat .country {
+      width: 310px;
+      height: 97px;
+      float: left;
+      border-bottom: 1px dotted black;
+      padding-left: 4px;
+    }
+
+    #fun-stats .country-a {
+      border-right: 1px dotted black;
+      background-color: #dbf2fb;
+    }
+
+    #fun-stats .country-b {
+      background-color: #f4e1d7;
+    }
+
+    #fun-stats .country-a .value {
+      color: #00aeef;
+
+    }
+
+    #fun-stats .country-b .value {
+      color: #f26522;
+    }
 
 
 /* ==|== media queries ======================================================
