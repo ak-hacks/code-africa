@@ -3,6 +3,7 @@
  */
 package co.uk.thetimes.codeafrica.datastore;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,6 +11,7 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -23,7 +25,8 @@ public class DSInterface {
 
 	private static final Logger logger = Logger.getLogger(DSInterface.class
 			.getCanonicalName());
-	private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	private static DatastoreService datastore = DatastoreServiceFactory
+			.getDatastoreService();
 
 	public static void persistEntity(Entity entity) {
 		logger.log(Level.INFO, "Saving entity");
@@ -44,15 +47,23 @@ public class DSInterface {
 			return null;
 		}
 	}
-	
+
 	public static Entity findEntity(Query query) {
-		logger.log(Level.INFO, "Searching for an entity that matches :: " + query.toString());
+		logger.log(Level.INFO, "Searching for an entity that matches :: "
+				+ query.toString());
 		PreparedQuery pq = datastore.prepare(query);
 		for (Entity result : pq.asIterable()) {
 			logger.log(Level.INFO, "Match Found :: " + result.toString());
 			return result;
 		}
 		return null;
+	}
+
+	public static List<Entity> listEntities(String kind) {
+		logger.log(Level.INFO, "Search entities based on search criteria");
+		Query q = new Query(kind);
+		PreparedQuery pq = datastore.prepare(q);
+		return pq.asList(FetchOptions.Builder.withLimit(500));
 	}
 
 	public static DatastoreService getDatastoreServiceInstance() {
