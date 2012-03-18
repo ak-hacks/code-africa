@@ -101,18 +101,17 @@ public class FindSimilarServlet extends HttpServlet {
 		
 		Entity similarCountry = null;
 		
-		while(rangeToCheckIn <= chosenParamValue) {		
+		while((chosenParamValue - (rangeToCheckIn/2)) > 0) {		
 			Query query = new Query("Country");
-
 			query.addFilter("Is African", Query.FilterOperator.EQUAL, 1);
 			query.addFilter(chosenParam, Query.FilterOperator.GREATER_THAN , chosenParamValue - rangeToCheckIn);
 			query.addFilter(chosenParam, Query.FilterOperator.LESS_THAN , chosenParamValue + rangeToCheckIn);
 			query.addFilter(chosenParam, Query.FilterOperator.NOT_EQUAL, chosenParamValue);
-
 			similarCountry = DSInterface.findEntity(query);
 			if(similarCountry != null)
 				break;
 			rangeToCheckIn *= 2;
+			logger.log(Level.INFO, "range to check in " + rangeToCheckIn);
 		}
 
 		return similarCountry;
@@ -128,9 +127,9 @@ public class FindSimilarServlet extends HttpServlet {
 		rangeToCheckIn = 0.00;
 		
 		if(chosenParam.equals("Area")) {
-			rangeToCheckIn = 10000;
+			rangeToCheckIn = 2000;
 		}else if(chosenParam.equals("Population")) {
-			rangeToCheckIn = 100000;
+			rangeToCheckIn = 50000;
 		}
 	}
 	
@@ -153,7 +152,6 @@ public class FindSimilarServlet extends HttpServlet {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return countryCoordinates;
 	}

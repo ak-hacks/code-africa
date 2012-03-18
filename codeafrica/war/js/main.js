@@ -143,7 +143,7 @@ codeafrica = (function () {
 
     	api.drawCountry(points, center);
 
-    	$("#caption").text(myCountry.key.name + " is similar to " + otherCountry.key.name + " in terms of " + data[2].propertyMap.prameter.toLowerCase());
+    	$("#caption").text(myCountry.key.name + " is closest to " + otherCountry.key.name + " in terms of " + data[2].propertyMap.prameter.toLowerCase() + " in Africa");
     };
 
     var getDataForCountry = function (country) {
