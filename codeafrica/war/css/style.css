@@ -278,9 +278,10 @@ td { vertical-align: top; }
   }
   
     #titles.row .col {
-      width: 165px;
+      width: 160px;
       font-weight: bold;
       font-size: 14px;
+      padding-left: 4px;
     }
     
     #titles.row .col.left {
@@ -299,19 +300,24 @@ td { vertical-align: top; }
     border-top: 1px dotted black;
   }
   
-  #boring-stats .stat > div {
-    width: 164px;
+  #boring-stats .stat .country {
+    width: 160px;
     height: 48px;
     float: left;
     border-bottom: 1px dotted black;
+    padding-left: 4px;
   }
   
   #boring-stats .key {
     font-size: 12px;
+    line-height: 12px;
+    margin-top: 3px;
   }
   
   #boring-stats .value {
     font-size: 20px;
+    line-height: 20px;
+    margin-top: 3px;
   }
   
   #boring-stats .country-a {
