@@ -1,9 +1,9 @@
 codeafrica = (function () {
 
     var MAP_WIDTH = 630,
-        MAP_HEIGHT = 380,
+        MAP_HEIGHT = 350,
         X_OFFSET = 330,
-        Y_OFFSET = 70,
+        Y_OFFSET = 95,
         LONGITUDE_SHIFT = -22
         LATITUDE_SHIFT = -9,
         INSET_MAP_SCALE_FACTOR = 1.9;
@@ -35,6 +35,26 @@ codeafrica = (function () {
      },
       "Alcohol Consumption" : {
      title : "Alcohol consumption",
+     type : "Litres per person per year"
+     },
+     "Coca Cola Consumption" : {
+     title : "Coca Cola Consumption",
+     type : "Litres per person per year"
+     },
+     "Cellular Subscribers" : {
+     title : "Cellular Subscribers",
+     type : "Litres per person per year"
+     },
+     "GDP Growth" : {
+     title : "GDP Growth",
+     type : "Litres per person per year"
+     },
+     "Internet Users" : {
+     title : "Internet Users",
+     type : "Litres per person per year"
+     },
+     "Corruptoin Index" : {
+     title : "Corruption Index",
      type : "Litres per person per year"
      }
     }
@@ -122,10 +142,12 @@ codeafrica = (function () {
     		center = JSON.parse(myCoords.propertyMap.centreCoordinates.value);
 
     	api.drawCountry(points, center);
+
+    	$("#caption").text(myCountry.key.name + " is similar to " + otherCountry.key.name + " in terms of " + data[2].propertyMap.prameter.toLowerCase());
     };
 
     var getDataForCountry = function (country) {
-    	$.get("findsimilar", { c1 : country }, handleReceivedData, "json");
+    	$.get("sample/findsimilar.html", { c1 : country }, handleReceivedData, "json");
     };
 
     api.init = function () {
@@ -134,7 +156,7 @@ codeafrica = (function () {
     		var parts = href.split("?");
     		var queryArgs = parts[parts.length-1];
     		if (queryArgs.indexOf("country") != -1) {
-    			var country = queryArgs.split("=")[1];
+    			var country = decodeURIComponent(queryArgs.split("=")[1]);
     			getDataForCountry(country);
     		}
     	}
