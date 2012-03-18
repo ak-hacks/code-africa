@@ -8,7 +8,10 @@ NI-Libraries-trunk/*
 NI-Technology-B_BaseApp_v2_15-03-2009_193900/*
 NI-Technology-SOL-trunk/*
 NI-Technology-STO-trunk/*
+NI-Technology-TTO-B_Mario_0.1.0_20111123_122700/*
+NI_technology-TTO-trunk/*
 Servers/*
+tto/*
 Test_Space/*
 jetgroovy/*
 *.class
