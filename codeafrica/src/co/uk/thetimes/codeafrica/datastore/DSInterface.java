@@ -11,6 +11,8 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 
 /**
  * Data store interface for CRUD ops on data store entities
@@ -41,6 +43,16 @@ public class DSInterface {
 			logger.log(Level.WARNING, "Cannot find entity");
 			return null;
 		}
+	}
+	
+	public static Entity findEntity(Query query) {
+		logger.log(Level.INFO, "Searching for an entity that matches :: " + query.toString());
+		PreparedQuery pq = datastore.prepare(query);
+		for (Entity result : pq.asIterable()) {
+			logger.log(Level.INFO, "Match Found :: " + result.toString());
+			return result;
+		}
+		return null;
 	}
 
 	public static DatastoreService getDatastoreServiceInstance() {

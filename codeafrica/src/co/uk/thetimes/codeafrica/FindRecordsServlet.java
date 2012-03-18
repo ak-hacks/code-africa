@@ -52,6 +52,7 @@ public class FindRecordsServlet extends HttpServlet {
 				listOfCountries.add(countryEntity2);
 			}
 
+			// Prepare and write JSON string to response stream.
 			Gson jsonConverter = new Gson();
 			String jsonResponseString = jsonConverter.toJson(listOfCountries);
 

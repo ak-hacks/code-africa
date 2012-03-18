@@ -29,6 +29,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/findrecords</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>FindSimilar</servlet-name>
+		<servlet-class>co.uk.thetimes.codeafrica.FindSimilarServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FindSimilar</servlet-name>
+		<url-pattern>/findsimilar</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>remote-api</servlet-name>
 		<servlet-class>
 			com.google.apphosting.utils.remoteapi.RemoteApiServlet

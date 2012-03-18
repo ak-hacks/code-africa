@@ -10,7 +10,7 @@ package co.uk.thetimes.codeafrica.model;
 public class Country {
 	
 	private String name;
-	private String area; // in sq kms
+	private double area; // in sq kms
 	private String population; // in millions
 	private String populationDensity;
 	private String literacyRate;
@@ -30,10 +30,10 @@ public class Country {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getArea() {
+	public double getArea() {
 		return area;
 	}
-	public void setArea(String area) {
+	public void setArea(double area) {
 		this.area = area;
 	}
 	public String getPopulation() {

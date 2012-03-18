@@ -25,7 +25,9 @@ public class AddRecordServlet extends HttpServlet {
 		if (countryName != null) {
 			Country country = new Country();
 			country.setName(countryName);
-			country.setArea(req.getParameter("area"));
+			String areaString = req.getParameter("area");
+			if(areaString != null && !areaString.equals(""))
+				country.setArea(Double.parseDouble(areaString));
 			country.setPopulation(req.getParameter("pop"));
 			country.setPopulationDensity(req.getParameter("popden"));
 			country.setLiteracyRate(req.getParameter("litrate"));
@@ -41,6 +43,10 @@ public class AddRecordServlet extends HttpServlet {
 
 			// Add or update country records
 			CountryDAO.addOrUpdateCountry(country);
+			
+			resp.setContentType("text/html");
+			resp.setStatus(200);
+			resp.getWriter().write("Data added successfully");
 		} else {
 			resp.setContentType("text/html");
 			// Respond with a HTTP 400 bad request code
