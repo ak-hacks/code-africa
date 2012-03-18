@@ -39,16 +39,107 @@
 
     </header>
     <div role="main" class="map">
-        <form>
-            <select name="country-select" id="country-select">
-                <option value="Australia">Australia</option>
-                <option value="UK">UK</option>
-                <option value="Egypt">Egypt</option>
-                <option value="Canada">Canada</option>
-                <option value="USA">USA</option>
-            </select>
-        </form>
+      
+      <!-- two maps, side by side -->
+      <div id="twin-maps" class="row clearfix">
+
+        <div class="col left">
+          <div id="headline">Headline</div>
+        </div>
+
+        <div id="instructions" class="col right">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          </p>
+          <form>
+              <select name="country-select" id="country-select">
+                  <option value="Australia">Australia</option>
+                  <option value="UK">UK</option>
+                  <option value="Egypt">Egypt</option>
+                  <option value="Canada">Canada</option>
+                  <option value="USA">USA</option>
+              </select>
+          </form>
+        </div>
+
+      </div>
+      
+      <!-- first column titles -->
+      <div id="titles" class="row clearfix">
+        
+        <div class="col left">
+          Country A
+        </div>
+        <div class="col right">
+          Country B
+        </div>
+      </div>
+
+      <!-- statistics -->
+      <div id="stats" class="row clearfix">
+        
+        <div id="boring-stats" class="col left">
+          
+          <div class="stat">
+            <div class="country-a">
+              <div class="name">
+                Population
+              </div>
+              <div class="value">
+                5,200,000
+              </div>
+            </div>
+            <div class="country-b">
+              <div class="name">
+                Population
+              </div>
+              <div class="value">
+                1,300,000
+              </div>
+            </div>
+            
+          </div>
+          
+          <div class="stat">
+            <div class="country-a">
+              <div class="name">
+                Population
+              </div>
+              <div class="value">
+                5,200,000
+              </div>
+            </div>
+            <div class="country-b">
+              <div class="name">
+                Population
+              </div>
+              <div class="value">
+                1,300,000
+              </div>
+            </div>
+            
+          </div>
+          
+          <div class="stat">
+            <div class="country-a"></div>
+            <div class="country-b"></div>
+          </div>
+          
+          <div class="stat">
+            <div class="country-a"></div>
+            <div class="country-b"></div>
+          </div>
+          
+        </div>
+
+        <div id="fun-stats" class="col right"></div>
+        
+        
+        
+      </div>
+      
     </div>
+    
     <footer>
 
     </footer>
