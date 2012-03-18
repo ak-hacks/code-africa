@@ -56,12 +56,22 @@ codeafrica = (function () {
         return "M " + processedPoints.join(" L ");
     };
 
+    var populateCountryList = function (data) {
+    	console.log(data.split("\n"));
+    	var list = "<% _.each(countries, function(name) { %> <option value='<%= name %>'><%= name %></option><% }); %>";
+		var html = _.template(list, {countries : data.split("\n")});
+		$countrySelect.html(html);
+    };
+
     api.init = function () {
         $countrySelect = $("#country-select");
         $countrySelect.change(function () {
             var country = $countrySelect.val();
+            $.get("sample/findrecords.txt", populateCountryList, "text");
             api.drawCountry(country);
         });
+
+        $.get("sample/findrecords.txt", populateCountryList, "text");
 
         mainMap = Raphael(X_OFFSET + $(".map").offset().left, Y_OFFSET, MAP_WIDTH, MAP_HEIGHT);
         detailMap = Raphael($(".map").offset().left, Y_OFFSET, 320, 320);
@@ -78,12 +88,7 @@ codeafrica = (function () {
         });
         var countryPath = mainMap.path(pointsToPath(xyPoints));
         //var countryPath = detailMap.rect(0, 0, 320, 320)
-        // Sets the fill attribute of the circle to red (#f00)
-        //circle.attr("fill", "#f00");
-
-        // Sets the stroke attribute of the circle to white
-        countryPath.attr("stroke", "#000");
-        countryPath.attr("stroke-width" , "2");
+        countryPath.attr("fill", "#f26522");
 
         // Draw the country on the map of Africa
         var xCenter = processLon(countries[country]["center"][0]);
@@ -98,8 +103,7 @@ codeafrica = (function () {
         console.log(detailPoints);
 
         var detailPath = detailMap.path(pointsToPath(detailPoints));
-        detailPath.attr("stroke", "#000");
-        detailPath.attr("stroke-width" , "2");
+        detailPath.attr("fill", "#00aeef");
     };
 
     return api;
