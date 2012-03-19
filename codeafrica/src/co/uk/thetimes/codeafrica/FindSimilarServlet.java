@@ -35,6 +35,7 @@ public class FindSimilarServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		String country1 = req.getParameter("c1");
+		//country1 = country1.replaceAll("+", " ");
 
 		if (country1 == null) {
 			resp.setContentType("text/html");

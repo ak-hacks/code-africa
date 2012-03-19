@@ -18,7 +18,7 @@ codeafrica = (function () {
      type : "percentage"
      },
      "Broadband Speed" : {
-     title : "Facebook users as a percentage of population",
+     title : "Broadband Speed (average in MBPS)",
      type : "Mps"
      },
        "Women in Parliament" : {
@@ -30,27 +30,27 @@ codeafrica = (function () {
      type : "percentage"
      },
       "Happiness" : {
-     title : "Happiness of the population",
+     title : "Happiness Index of the population",
      type : "index:higher means happier"
      },
       "Alcohol Consumption" : {
-     title : "Alcohol consumption",
+     title : "Alcohol consumption (per capita in litres)",
      type : "Litres per person per year"
      },
      "Coca Cola Consumption" : {
-     title : "Coca Cola Consumption",
+     title : "Coca Cola Consumption (8-ounce servings per capita)",
      type : "Litres per person per year"
      },
      "Cellular Subscribers" : {
-     title : "Cellular Subscribers",
+     title : "Cellular Subscriptions per 100 people",
      type : "Litres per person per year"
      },
      "GDP Growth" : {
-     title : "GDP Growth",
+     title : "GDP Growth percentage",
      type : "Litres per person per year"
      },
      "Internet Users" : {
-     title : "Internet Users",
+     title : "Internet Users per 100 people",
      type : "Litres per person per year"
      },
      "Corruptoin Index" : {
