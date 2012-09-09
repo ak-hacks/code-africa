@@ -1,3 +1,0 @@
-cat data.csv | awk -F',' '{print "http://thetimescodejam.appspot.com/addrecord?name=" $1 "&area=" $2 "&pop=" $3 "&popden=" $4"&litrate=" $5 "&urb=" $6 "&divrate=" $7 "&age=" $8 "&nom=" $9 "&ccc=" $10 "&wip=" $11 "&alcc=" $12 "&aid=" $13 "&bbspeed=" $14}' > records.list.1
-
-sed s/" "/"%20"/g records.list.1 > records.list
